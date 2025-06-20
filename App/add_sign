@@ -1,0 +1,88 @@
+import cv2
+import mediapipe as mp
+import os
+import yaml
+
+# Function to create a directory if it doesn't exist
+def create_directory(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+def capture_last_image(frame, output_folder, new_sign):
+    # Create the output folder if it doesn't exist
+    create_directory(output_folder)
+
+    # Generate a file name for the image (you can customize this)
+    image_filename = os.path.join(output_folder, f"{new_sign}.jpg")
+
+    # Save the ROI as a JPG file
+    cv2.imwrite(image_filename, frame)
+
+    print(f"Last image captured and saved: {image_filename}")
+
+    return image_filename  # Return the image file path
+
+def add_sign(new_sign):
+    hand_dir = os.path.join("Dataset/Signs", new_sign)
+    create_directory(hand_dir)
+
+    mp_hands = mp.solutions.hands
+    hands = mp_hands.Hands(max_num_hands=2)  # Allow both hands detection
+    cap = cv2.VideoCapture(0)
+
+    margin = 20
+    total_count = 0  # Single counter for both hands
+
+    last_image_path = None
+
+    while total_count < 100:  # Capture 100 images total (combined from both hands)
+        _, frame = cap.read()
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands.process(rgb_frame)
+
+        if results.multi_hand_landmarks:
+            hand_data = {}  # Dictionary to store landmark data
+
+            for i, hand_landmarks in enumerate(results.multi_hand_landmarks):
+                bbox_min = [float('inf'), float('inf')]
+                bbox_max = [float('-inf'), float('-inf')]
+
+                for landmark in hand_landmarks.landmark:
+                    x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
+                    bbox_min[0] = min(bbox_min[0], x)
+                    bbox_min[1] = min(bbox_min[1], y)
+                    bbox_max[0] = max(bbox_max[0], x)
+                    bbox_max[1] = max(bbox_max[1], y)
+
+                bbox_min[0] = max(0, bbox_min[0] - margin)
+                bbox_min[1] = max(0, bbox_min[1] - margin)
+                bbox_max[0] = min(frame.shape[1], bbox_max[0] + margin)
+                bbox_max[1] = min(frame.shape[0], bbox_max[1] + margin)
+
+                cv2.rectangle(frame, (bbox_min[0], bbox_min[1]), (bbox_max[0], bbox_max[1]), (0, 255, 0), 2)
+
+                hand_key = f"hand_{i}"  # Unique key for each detected hand
+                hand_data[hand_key] = {'hand_landmarks': []}
+
+                for landmark in hand_landmarks.landmark:
+                    hand_data[hand_key]['hand_landmarks'].append({'x': landmark.x, 'y': landmark.y, 'z': landmark.z})
+
+                # Save YAML file for each detected hand
+                yaml_filename = os.path.join(hand_dir, f"{hand_key}_{total_count}.yml")
+                with open(yaml_filename, 'w') as yaml_file:
+                    yaml.dump(hand_data[hand_key], yaml_file, default_flow_style=False)
+
+            total_count += 1  # Increment after capturing both hands in a single frame
+
+        cv2.imshow("Hand Tracking", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    last_frame = frame.copy()
+    last_image_path = capture_last_image(last_frame, "Static/img/LastImage", new_sign)
+    
+    cap.release()
+    cv2.destroyAllWindows()
+    
+    return last_image_path
