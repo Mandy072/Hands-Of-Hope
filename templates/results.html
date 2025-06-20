@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Results{% endblock title %}
+{% block body %}
+
+{% if user.is_authenticated %}
+<section class="row p-5">
+    <div class="d-flex mx-auto shadow w-75 p-0 border border-dark border-2 mt-5">
+        <div class="row col-lg-12 p-5">
+            <h1 class="text-center" style="font-style: italic;">Results</h1>
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Questions</th>
+                        <th scope="col">Answers</th>
+                        <th scope="col">Total Marks</th>
+                        <th scope="col">Predivted Marks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in final_result %}
+                      <tr>
+                        {% for i in result %}
+                        <td>{{i}}</td>
+                        {% endfor %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock body %}

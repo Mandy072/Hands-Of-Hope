@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Capture Sign{% endblock title %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+
+    <section class="pt-5 px-5">
+        <div class="mx-auto shadow p-3 border border-2 border-dark mt-5 ">
+            <div class="row col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-4 col-sm-12 p-4">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+
+                        <h6 class="mt-4">Enter Sentence : </h6>
+                        <input type="text" class="form-control" placeholder="Enter Sentence" name="sentence"
+                            id="sentence">
+                        <p class="text-danger">Using the words present in our dataset, we can create a video of sign
+                            language gestures, serving as a powerful tool to convey messages to those who may have
+                            difficulty understanding spoken language.</p>
+                        <button class="btn btn-dark" type="submit" name="text"> Create Video </button>
+                        
+                        <button class="btn btn-success" type="submit" name="record"> Record Sentence </button>
+                </div>
+                <div class="col-lg-8 col-sm-12 p-4" style="height:500px; overflow-y:auto;">
+                    <h4>Videos</h4>
+                    <table class="table table-bordered border-dark">
+                        <thead>
+                            <tr class="table-dark">
+                                <th scope="col">Sentences</th>
+                                <th scope="col">Sign Videos</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:20px;">
+                            {% for sen in sentence %}
+                            <tr>
+                                <th>{{ sen.sentence }}</th>
+                                <th>
+                                    <video height="200" controls>
+                                        <source src="{{ sen.video.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </th>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-danger w-25 mt-4" href="dashboard"> Go to Dashboard </a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock body %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block body %}
+
+{% if user.is_authenticated %}
+<section class="p-5">
+  <div class="row col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="mx-auto shadow p-3 border border-2 border-dark mt-5 text-center" style="height:500px;">
+        <img src="static/img/analysis.webp" alt="static/img/analysis.webp" style="height:200px;">
+        <h4 class="mt-3"> Model Training</h4>
+        <div style="text-align: justify;text-justify: inter-word;">
+          This feature facilitates image capture for the inclusion of new signs, enhancing the dataset for training. It enables the expansion of the model's recognition capabilities.
+        </div>
+        <a href="new_sign" class="btn btn-danger">Add New Sign </a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="mx-auto shadow p-3 border border-2 border-dark mt-5 text-center" style="height:500px;">
+        <img src="static/img/sign_to_text.jpg" alt="static/img/analysis.webp" style="height:200px;">
+        <h4 class="mt-3"> Sign to Text Prediction</h4>
+        <div style="text-align: justify;text-justify: inter-word;">
+          This functionality involves activating a camera to capture hand gestures, extracting pertinent signs from the visual data. The system then employs gesture recognition to predict and identify the specific sign represented.
+        </div>
+        <a href="capture_sign" class="btn btn-danger">Open Camera</a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="mx-auto shadow p-3 border border-2 border-dark mt-5 text-center" style="height:500px;">
+        <img src="static/img/alphabet.webp" alt="static/img/alphabet.webp" style="height:200px;">
+        <h4 class="mt-3"> Text to Sign Prediction</h4>
+        <div style="text-align: justify;text-justify: inter-word;">
+          In this capability, textual input is provided, and the system translates the provided text into a corresponding hand gesture. Utilizing this association, an image representing the specified sign is generated, facilitating a seamless interchange between text and visual expressions.
+        </div>
+        <a href="learn_sign" class="btn btn-danger">Learn Language</a>
+      </div>
+    </div>
+  </div>
+    
+  </section>
+
+    {% endif %}
+{% endblock body %}

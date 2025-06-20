@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Capture Sign{% endblock title %}
+
+
+{% block body %}
+{% if user.is_authenticated %}
+<section class="pt-5 px-5">
+    <div class="mx-auto shadow p-3 border border-2 border-dark mt-5 ">
+        <div class="row col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-4 col-sm-12 p-4">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    
+                    <h6 class="mt-4">Instructions : </h6>
+                    <div style="height:300px; overflow:auto;">
+                        
+                        <ol>
+                            <li><strong>Environment Setup:</strong>
+                                <ul>
+                                    <li>Choose a well-lit environment.</li>
+                                    <li>Maintain a comfortable distance from the camera.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Right Hand Gesture:</strong>
+                                <ul>
+                                    <li>Face the camera.</li>
+                                    <li>Extend your right hand with all fingers visible.</li>
+                                    <li>Hold your hand steady.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Capture Right Hand Image:</strong>
+                                <ul>
+                                    <li>Press a designated key or button to capture the image.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Notification:</strong>
+                                <ul>
+                                    <li>Wait for a notification or prompt.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Left Hand Gesture:</strong>
+                                <ul>
+                                    <li>Face the camera again.</li>
+                                    <li>Extend your left hand with all fingers visible.</li>
+                                    <li>Hold your hand steady.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Capture Left Hand Image:</strong>
+                                <ul>
+                                    <li>Press a designated key or button to capture the image.</li>
+                                </ul>
+                            </li>
+                        
+                            <li><strong>Ensure Proper Lighting:</strong>
+                                <ul>
+                                    <li>Check and maintain good lighting conditions for clearer images.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                <button class="btn btn-dark" type="submit"> Open Camera </button>
+                <a class="btn btn-danger" href="dashboard"> Go to Dashboard </a>
+            </div>
+            <div class="col-lg-8 col-sm-12 p-4" style="height:500px; overflow-y:auto;">
+                <h4>Existing Signs</h4>
+                <table class="table table-bordered border-dark">
+                    <thead>
+                      <tr class="table-dark">
+                        <th scope="col">Sign Image</th>
+                        <th scope="col">Sign Name</th>
+                      </tr>
+                    </thead>
+                    <tbody style="font-size:20px;">
+                        {% for img in sign_data %}
+                            <tr>
+                                <th><img src="{{ img.image.url }}" alt="{{ img.image.url }}" style="height:200px; width:auto;"></th>
+                                <th>{{ img.sign_name }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock body %}

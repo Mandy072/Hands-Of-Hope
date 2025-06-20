@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block body %}
+
+<section class="row p-5">
+    <div class="d-flex mx-auto shadow w-75 p-0 border border-dark border-2 mt-5">
+        <div class="col-5 d-flex align-items-center">
+            <img src="static/img/pngtree-user-login-or-authenticate-icon-on-gray-background-flat-icon-ve-png-image_1786166.jpg"
+                class="myImg" />
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="col p-5">
+                <h1 class="text-center" style="font-style: italic;">Login</h1>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">Email</span>
+                    <input id="username" name="username" for="username" type="email" class="form-control"
+                        placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">Password</span>
+                    <input id="password" name="password" for="password" type="password" class="form-control"
+                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+
+                    <button class="btn btn-dark" type="submit">Login</button>
+                </div>
+                <p class="text-center mt-2">Doesn't have an Account? <a class="text-primary">Register</a></p>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock body %}

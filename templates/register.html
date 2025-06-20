@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+{% block body %}
+
+<section class="row p-5">
+    <div class="d-flex mx-auto shadow w-75 p-0 border border-dark border-2 mt-5">
+        <div class="col-5 d-flex align-items-center">
+            <img src="static/img/73-730394_admin-approved-user-registration-user-registration-icon-png.png"
+                class="myImg h-50" />
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="col p-5">
+
+                <h1 class="text-center" style="font-style: initial;">Register</h1>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">FirstName</span>
+                    <input id="fname" name="fname" for="fname" type="text" class="form-control" placeholder="FirstName"
+                        aria-label="FirstName" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">LastName</span>
+                    <input id="lname" name="lname" for="lname" type="text" class="form-control" placeholder="LastName"
+                        aria-label="LastName" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">Email</span>
+                    <input id="username" name="username" for="username" type="email" class="form-control"
+                        placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">Password</span>
+                    <input id="password" name="password" for="password" type="password" class="form-control"
+                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3 mt-5">
+                    <span class="input-group-text" id="basic-addon1">Renter Password</span>
+                    <input id="password1" name="password1" for="password1" type="password" class="form-control"
+                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+
+                    <button class="btn btn-dark" type="submit">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock body %}
